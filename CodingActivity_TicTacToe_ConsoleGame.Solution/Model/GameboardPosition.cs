@@ -13,9 +13,11 @@ namespace CodingActivity_TicTacToe_ConsoleGame
     {
         public int Row { get; set; }
         public int Column { get; set; }
+        public int Level { get; set; }
         
-        public GameboardPosition(int row, int column)
+        public GameboardPosition(int level, int row, int column)
         {
+            Level = level;
             Row = row;
             Column = column;
         }
