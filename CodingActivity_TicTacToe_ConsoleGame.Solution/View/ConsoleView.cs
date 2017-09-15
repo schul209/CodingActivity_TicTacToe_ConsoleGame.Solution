@@ -314,27 +314,33 @@ namespace CodingActivity_TicTacToe_ConsoleGame
             //
             Console.SetCursorPosition(0, GAMEBOARD_VERTICAL_LOCATION);
 
-            Console.Write("\t\t\t        |---+---+---|\n");
-
-            for (int i = 0; i < 3; i++)
+            for (int level = 0; level < 3; level++)
             {
-                Console.Write("\t\t\t        | ");
+                Console.Write("\t\t\t        |---+---+---|\n");
 
-                for (int j = 0; j < 3; j++)
+                for (int i = 0; i < 3; i++)
                 {
-                    if (_gameboard.PositionState[i, j] == Gameboard.PlayerPiece.None)
+                    Console.Write("\t\t\t        | ");
+
+                    for (int j = 0; j < 3; j++)
                     {
-                        Console.Write(" " + " | ");
-                    }
-                    else
-                    {
-                        Console.Write(_gameboard.PositionState[i, j] + " | ");
+                        if (_gameboard.PositionState[level, i, j] == Gameboard.PlayerPiece.None)
+                        {
+                            Console.Write(" " + " | ");
+                        }
+                        else
+                        {
+                            Console.Write(_gameboard.PositionState[level, i, j] + " | ");
+                        }
+
                     }
 
+                    Console.Write("\n\t\t\t        |---+---+---|\n");
                 }
 
-                Console.Write("\n\t\t\t        |---+---+---|\n");
+                Console.Write($"\n\t\t\t        Level {level + 1}\n\n\n");
             }
+            
 
         }
 
@@ -407,20 +413,28 @@ namespace CodingActivity_TicTacToe_ConsoleGame
             //
             // Initialize gameboardPosition with -1 values
             //
-            GameboardPosition gameboardPosition = new GameboardPosition(-1, -1);
+            GameboardPosition gameboardPosition = new GameboardPosition(-1, -1, -1);
+
+            //
+            // Get level number from player.
+            //
+            gameboardPosition.Level = PlayerCoordinateChoice("Level");
 
             //
             // Get row number from player.
             //
-            gameboardPosition.Row = PlayerCoordinateChoice("Row");
-
+            if (CurrentViewState != ViewState.PlayerUsedMaxAttempts)
+            {
+                gameboardPosition.Row = PlayerCoordinateChoice("Row");
+            }
+            
             //
             // Get column number.
             //
             if (CurrentViewState != ViewState.PlayerUsedMaxAttempts)
             {
                 gameboardPosition.Column = PlayerCoordinateChoice("Column");
-            }
+            }            
 
             return gameboardPosition;
 

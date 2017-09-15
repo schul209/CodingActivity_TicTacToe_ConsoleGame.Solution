@@ -36,7 +36,7 @@ namespace CodingActivity_TicTacToe_ConsoleGame
 
         private const int MAX_NUM_OF_ROWS_COLUMNS = 3;
 
-        private PlayerPiece[,] _positionState;
+        private PlayerPiece[,,] _positionState;
 
         private GameboardState _currentRoundState;
 
@@ -49,7 +49,7 @@ namespace CodingActivity_TicTacToe_ConsoleGame
             get { return MAX_NUM_OF_ROWS_COLUMNS; }
         }
 
-        public PlayerPiece[,] PositionState
+        public PlayerPiece[,,] PositionState
         {
             get { return _positionState; }
             set { _positionState = value; }
@@ -66,7 +66,7 @@ namespace CodingActivity_TicTacToe_ConsoleGame
 
         public Gameboard()
         {
-            _positionState = new PlayerPiece[MAX_NUM_OF_ROWS_COLUMNS, MAX_NUM_OF_ROWS_COLUMNS];
+            _positionState = new PlayerPiece[MAX_NUM_OF_ROWS_COLUMNS, MAX_NUM_OF_ROWS_COLUMNS, MAX_NUM_OF_ROWS_COLUMNS];
 
             InitializeGameboard();
         }
@@ -85,13 +85,17 @@ namespace CodingActivity_TicTacToe_ConsoleGame
             //
             // Set all PlayerPiece array values to "None"
             //
-            for (int row = 0; row < MAX_NUM_OF_ROWS_COLUMNS; row++)
+            for (int level = 0; level < MAX_NUM_OF_ROWS_COLUMNS; level++)
             {
-                for (int column = 0; column < MAX_NUM_OF_ROWS_COLUMNS; column++)
+                for (int row = 0; row < MAX_NUM_OF_ROWS_COLUMNS; row++)
                 {
-                    _positionState[row, column] = PlayerPiece.None;
+                    for (int column = 0; column < MAX_NUM_OF_ROWS_COLUMNS; column++)
+                    {
+                        _positionState[level, row, column] = PlayerPiece.None;
+                    }
                 }
             }
+            
         }
 
 
@@ -107,7 +111,7 @@ namespace CodingActivity_TicTacToe_ConsoleGame
             // Note: gameboardPosition converted to array index by subtracting 1
             //
 
-            if (_positionState[gameboardPosition.Row - 1, gameboardPosition.Column - 1] == PlayerPiece.None)
+            if (_positionState[gameboardPosition.Level - 1, gameboardPosition.Row - 1, gameboardPosition.Column - 1] == PlayerPiece.None)
             {
                 return true;
             }
@@ -147,16 +151,20 @@ namespace CodingActivity_TicTacToe_ConsoleGame
             //
             // All positions on board are filled and no winner
             //
-            for (int row = 0; row < 3; row++)
+            for (int level = 0; level < 3; level++)
             {
-                for (int column = 0; column < 3; column++)
+                for (int row = 0; row < 3; row++)
                 {
-                    if (_positionState[row, column] == PlayerPiece.None)
+                    for (int column = 0; column < 3; column++)
                     {
-                        return false;
+                        if (_positionState[level, row, column] == PlayerPiece.None)
+                        {
+                            return false;
+                        }
                     }
                 }
             }
+            
             return true;
         }
 
@@ -167,43 +175,134 @@ namespace CodingActivity_TicTacToe_ConsoleGame
         /// <returns>true if a player has won</returns>
         private bool ThreeInARow(PlayerPiece playerPieceToCheck)
         {
+
             //
-            // Check rows for player win
+            // Check horizontal rows in each level for player win
             //
-            for (int row = 0; row < 3; row++)
+            for (int level = 0; level < 3; level++)
             {
-                if (_positionState[row, 0] == playerPieceToCheck &&
-                    _positionState[row, 1] == playerPieceToCheck &&
-                    _positionState[row, 2] == playerPieceToCheck)
+                for (int row = 0; row < 3; row++)
+                {
+                    if (_positionState[level, row, 0] == playerPieceToCheck &&
+                        _positionState[level, row, 1] == playerPieceToCheck &&
+                        _positionState[level, row, 2] == playerPieceToCheck)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+
+            //
+            // Check horizontal columns in each level for player win
+            //
+            for (int level = 0; level < 3; level++)
+            {
+                for (int column = 0; column < 3; column++)
+                {
+                    if (_positionState[level, 0, column] == playerPieceToCheck &&
+                        _positionState[level, 1, column] == playerPieceToCheck &&
+                        _positionState[level, 2, column] == playerPieceToCheck)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            //
+            // Check horizontal diagonals in each level for player win
+            //
+            for (int level = 0; level < 3; level++)
+            {
+                if (
+                (_positionState[level, 0, 0] == playerPieceToCheck &&
+                _positionState[level, 1, 1] == playerPieceToCheck &&
+                _positionState[level, 2, 2] == playerPieceToCheck)
+                ||
+                (_positionState[level, 0, 2] == playerPieceToCheck &&
+                _positionState[level, 1, 1] == playerPieceToCheck &&
+                _positionState[level, 2, 0] == playerPieceToCheck)
+                )
                 {
                     return true;
                 }
             }
 
             //
-            // Check columns for player win
+            // Check vertical rows in each column for player win
             //
             for (int column = 0; column < 3; column++)
             {
-                if (_positionState[0, column] == playerPieceToCheck &&
-                    _positionState[1, column] == playerPieceToCheck &&
-                    _positionState[2, column] == playerPieceToCheck)
+                for (int row = 0; row < 3; row++)
+                {
+                    if (_positionState[0, row, column] == playerPieceToCheck &&
+                        _positionState[1, row, column] == playerPieceToCheck &&
+                        _positionState[2, row, column] == playerPieceToCheck
+                        )
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            //
+            // Check levels in each column for player win
+            //
+            for (int column = 0; column < 3; column++)
+            {
+                for (int level = 0; level < 3; level++)
+                {
+                    if (_positionState[level, 0, column] == playerPieceToCheck &&
+                        _positionState[level, 1, column] == playerPieceToCheck &&
+                        _positionState[level, 2, column] == playerPieceToCheck
+                        )
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            //
+            // Check vertical diagonals in each column for player win
+            //
+            for (int column = 0; column < 3; column++)
+            {
+                if (
+                (_positionState[0, 0, column] == playerPieceToCheck &&
+                _positionState[1, 1, column] == playerPieceToCheck &&
+                _positionState[2, 2, column] == playerPieceToCheck)
+                ||
+                (_positionState[2, 0, column] == playerPieceToCheck &&
+                _positionState[1, 1, column] == playerPieceToCheck &&
+                _positionState[0, 2, column] == playerPieceToCheck)
+                )
                 {
                     return true;
                 }
             }
 
             //
-            // Check diagonals for player win
+            // Check 3-dimensional diagonals
             //
             if (
-                (_positionState[0, 0] == playerPieceToCheck &&
-                _positionState[1, 1] == playerPieceToCheck &&
-                _positionState[2, 2] == playerPieceToCheck)
+                (_positionState[0, 2, 0] == playerPieceToCheck &&
+                _positionState[1, 1, 1] == playerPieceToCheck &&
+                _positionState[2, 0, 2] == playerPieceToCheck)
                 ||
-                (_positionState[0, 2] == playerPieceToCheck &&
-                _positionState[1, 1] == playerPieceToCheck &&
-                _positionState[2, 0] == playerPieceToCheck)
+                (_positionState[2, 2, 0] == playerPieceToCheck &&
+                _positionState[1, 1, 1] == playerPieceToCheck &&
+                _positionState[0, 0, 2] == playerPieceToCheck
+                )
+                ||
+                (_positionState[0, 0, 0] == playerPieceToCheck &&
+                _positionState[1, 1, 1] == playerPieceToCheck &&
+                _positionState[2, 2, 2] == playerPieceToCheck
+                )
+                ||
+                (_positionState[2, 0, 0] == playerPieceToCheck &&
+                _positionState[1, 1, 1] == playerPieceToCheck &&
+                _positionState[0, 2, 2] == playerPieceToCheck
+                )
                 )
             {
                 return true;
@@ -227,7 +326,7 @@ namespace CodingActivity_TicTacToe_ConsoleGame
             // Row and column value adjusted to match array structure
             // Note: gameboardPosition converted to array index by subtracting 1
             //
-            _positionState[gameboardPosition.Row - 1, gameboardPosition.Column - 1] = PlayerPiece;
+            _positionState[gameboardPosition.Level - 1, gameboardPosition.Row - 1, gameboardPosition.Column - 1] = PlayerPiece;
 
             //
             // Change game board state to next player
