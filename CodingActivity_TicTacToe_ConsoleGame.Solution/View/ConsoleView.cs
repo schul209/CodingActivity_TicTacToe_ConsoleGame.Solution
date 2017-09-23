@@ -113,7 +113,7 @@ namespace CodingActivity_TicTacToe_ConsoleGame
             Console.CursorVisible = false;
 
             Console.WriteLine();
-            ConsoleUtil.DisplayMessage("Thank you for play the game. Press any key to Exit.");
+            ConsoleUtil.DisplayMessage("Thank you for playing the game. Press any key to Exit.");
 
             Console.ReadKey();
 
@@ -178,25 +178,115 @@ namespace CodingActivity_TicTacToe_ConsoleGame
         {
             StringBuilder sb = new StringBuilder();
 
-            ConsoleUtil.HeaderText = "The Tic-tac-toe Game";
+            ConsoleUtil.HeaderText = "3D Tic-tac-toe Game!";
             ConsoleUtil.DisplayReset();
 
-            ConsoleUtil.DisplayMessage("Written by John Velis");
+            ConsoleUtil.DisplayMessage("Written by Cati Kujawski, Lianna Bowman & Thresa Schultz");
             ConsoleUtil.DisplayMessage("Northwestern Michigan College");
             Console.WriteLine();
 
             sb.Clear();
-            sb.AppendFormat("This application is designed to allow two players to play ");
-            sb.AppendFormat("a game of tic-tac-toe. The rules are the standard rules for the ");
-            sb.AppendFormat("game with each player taking a turn.");
+            sb.AppendFormat("This is a two player game playing 3D Tic Tac Toe. ");
+            sb.AppendFormat("You may select from levels 1, 2 or 3 similar to different floors ");
+            sb.AppendFormat("of a building. You have the ability to win utilizing all of the different levels.");
+            sb.AppendFormat("After choosing a level, you choose a row, then a column.");
             ConsoleUtil.DisplayMessage(sb.ToString());
             Console.WriteLine();
 
             sb.Clear();
-            sb.AppendFormat("Your first task will be to set up your account details.");
+            sb.AppendFormat("For examples of a win press 'M' for Menu.");
             ConsoleUtil.DisplayMessage(sb.ToString());
 
             DisplayContinuePrompt();
+        }
+        /// <summary>
+        /// get the menu choice from the user
+        /// </summary>
+        public MenuOption DisplayGetUserMenuChoice()
+        {
+            MenuOption userMenuChoice = MenuOption.None;
+            bool usingMenu = true;
+
+            //
+            // TODO enable each application function separately and test
+            //
+            while (usingMenu)
+            {
+                //
+                // set up display area
+                //
+                ConsoleUtil.DisplayReset();
+                Console.CursorVisible = false;
+
+                //
+                // display the menu
+                //
+                ConsoleUtil.DisplayMessage("Please type the number of your menu choice.");
+                Console.WriteLine();
+                Console.WriteLine(
+                    "\t" + "1. Play New Round" + Environment.NewLine +
+                    "\t" + "2. View the rules" + Environment.NewLine +
+                    "\t" + "3. View current game stats" + Environment.NewLine +
+                    "\t" + "E. Exit" + Environment.NewLine);
+                /*
+                //
+                // get and process the user's response
+                // note: ReadKey argument set to "true" disables the echoing of the key press
+                //
+                ConsoleKeyInfo userResponse = Console.ReadKey(true);
+                switch (userResponse.KeyChar)
+                {
+                    case '6':
+                        userMenuChoice = MenuOption.PlayNewRound;
+                        usingMenu = false;
+                        break;
+                    case 'E':
+                    case 'e':
+                        userMenuChoice = MenuOption.Quit;
+                        usingMenu = false;
+                        break;
+                    default:
+                        //
+                        // TODO handle invalid menu responses from user
+                        //
+                        break;*/
+                ConsoleKeyInfo userResponse = Console.ReadKey(true);
+                switch (userResponse.KeyChar)
+                {
+                    case '1':
+                        userMenuChoice = MenuOption.PlayNewRound;
+                        usingMenu = false;
+                        break;
+                    case '2':
+                        userMenuChoice = MenuOption.ViewRules;
+
+                        usingMenu = false;
+                        break;
+                    case '3':
+                        userMenuChoice = MenuOption.ViewCurrentGameResults;
+                        usingMenu = false;
+                        break;
+                    case 'E':
+                    case 'e':
+                        userMenuChoice = MenuOption.Quit;
+                        usingMenu = false;
+                        break;
+                    default:
+                        Console.WriteLine(
+                            "It appears you have selected an incorrect choice." + Environment.NewLine +
+                            "Press any key to continue or the ESC key to quit the application.");
+
+                        userResponse = Console.ReadKey(true);
+                        if (userResponse.Key == ConsoleKey.Escape)
+                        {
+                            usingMenu = false;
+                        }
+                        break;
+                }
+            }
+            Console.CursorVisible = true;
+
+            return userMenuChoice;
         }
 
         /// <summary>
@@ -235,6 +325,7 @@ namespace CodingActivity_TicTacToe_ConsoleGame
             ConsoleUtil.DisplayMessage("Rounds for Player O: " + playerOWins + " - " + String.Format("{0:P2}", playerOPercentageWins));
             ConsoleUtil.DisplayMessage("Cat's Games: " + catsGames + " - " + String.Format("{0:P2}", percentageOfCatsGames));
 
+             
             DisplayContinuePrompt();
         }
 

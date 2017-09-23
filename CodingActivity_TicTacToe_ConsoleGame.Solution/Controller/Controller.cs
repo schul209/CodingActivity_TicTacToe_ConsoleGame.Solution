@@ -79,9 +79,38 @@ namespace CodingActivity_TicTacToe_ConsoleGame
         public void PlayGame()
         {
             _gameView.DisplayWelcomeScreen();
+            MenuOption userMenuChoice;
 
             while (_playingGame)
             {
+
+                //
+                // get a menu choice from the ConsoleView object
+                //
+                userMenuChoice = _gameView.DisplayGetUserMenuChoice();
+
+                //
+                // choose an action based on the user's menu choice
+                //
+                switch (userMenuChoice)
+                {
+                    case MenuOption.None:
+                        break;
+                    case MenuOption.PlayNewRound:
+                        _gameView.DisplayGameArea();
+                        break;
+                    case MenuOption.ViewRules:
+                        _gameView.DisplayWelcomeScreen();
+                        break;
+                    case MenuOption.ViewCurrentGameResults:
+                        _gameView.DisplayGameStatus();
+                        break; 
+                    case MenuOption.Quit:
+                        _gameView.DisplayExitPrompt();
+                        break;
+                    default:
+                        break;
+                }
                 //
                 // Round loop
                 //
@@ -117,6 +146,10 @@ namespace CodingActivity_TicTacToe_ConsoleGame
                         _gameboard.InitializeGameboard();
                         _gameView.InitializeView();
                         _playingRound = true;
+                    }
+                    else
+                    {
+                        _playingGame = false;
                     }
                 }
                 //
