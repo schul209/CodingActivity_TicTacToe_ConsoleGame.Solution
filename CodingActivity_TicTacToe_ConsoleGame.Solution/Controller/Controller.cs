@@ -131,7 +131,7 @@ namespace CodingActivity_TicTacToe_ConsoleGame
                 // Round Complete: Display the results
                 //
                 _gameView.DisplayCurrentGameStatus(_roundNumber, _playerXNumberOfWins, _playerONumberOfWins, _numberOfCatsGames);
-
+                
                 //
                 // Confirm no major user errors
                 //

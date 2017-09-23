@@ -194,7 +194,9 @@ namespace CodingActivity_TicTacToe_ConsoleGame
             Console.WriteLine();
 
             sb.Clear();
-            sb.AppendFormat("For examples of a win press 'M' for Menu.");
+            sb.AppendFormat("Example of a win: player x gets top left corner on all");
+            sb.AppendFormat("three levels");
+            sb.AppendFormat("Example of a win: player O gets traditional 3 horizontally, diagonally or vertical.");
             ConsoleUtil.DisplayMessage(sb.ToString());
 
             DisplayContinuePrompt();
@@ -228,28 +230,7 @@ namespace CodingActivity_TicTacToe_ConsoleGame
                     "\t" + "2. View the rules" + Environment.NewLine +
                     "\t" + "3. View current game stats" + Environment.NewLine +
                     "\t" + "E. Exit" + Environment.NewLine);
-                /*
-                //
-                // get and process the user's response
-                // note: ReadKey argument set to "true" disables the echoing of the key press
-                //
-                ConsoleKeyInfo userResponse = Console.ReadKey(true);
-                switch (userResponse.KeyChar)
-                {
-                    case '6':
-                        userMenuChoice = MenuOption.PlayNewRound;
-                        usingMenu = false;
-                        break;
-                    case 'E':
-                    case 'e':
-                        userMenuChoice = MenuOption.Quit;
-                        usingMenu = false;
-                        break;
-                    default:
-                        //
-                        // TODO handle invalid menu responses from user
-                        //
-                        break;*/
+                
                 ConsoleKeyInfo userResponse = Console.ReadKey(true);
                 switch (userResponse.KeyChar)
                 {
@@ -313,6 +294,7 @@ namespace CodingActivity_TicTacToe_ConsoleGame
 
         public void DisplayCurrentGameStatus(int roundsPlayed, int playerXWins, int playerOWins, int catsGames)
         {
+
             ConsoleUtil.HeaderText = "Current Game Status";
             ConsoleUtil.DisplayReset();
 
