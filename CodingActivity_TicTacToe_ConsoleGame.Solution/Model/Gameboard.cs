@@ -172,13 +172,6 @@ namespace CodingActivity_TicTacToe_ConsoleGame
         {
             bool complete = false;
 
-            //if (currentState == GameboardState.CatsGame ||
-            //    currentState == GameboardState.PlayerOWin ||
-            //    currentState == GameboardState.PlayerOWin)
-            //{
-            //    complete = true;
-            //}
-
             if (_currentRoundState == GameboardState.CatsGame ||
                 _currentRoundState == GameboardState.PlayerXWin ||
                 _currentRoundState == GameboardState.PlayerOWin)
