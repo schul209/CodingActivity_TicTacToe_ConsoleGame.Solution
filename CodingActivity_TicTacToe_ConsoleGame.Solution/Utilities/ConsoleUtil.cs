@@ -35,6 +35,12 @@ namespace CodingActivity_TicTacToe_ConsoleGame
 
         private static int _displayHorizontalMargin = 3;
 
+        //
+        // splash screen colors
+        //
+        public static ConsoleColor SplashScreenBackgroundColor = ConsoleColor.Black;
+        public static ConsoleColor SplashScreenForegroundColor = ConsoleColor.White;
+
         #endregion
 
         #region PROPERTIES

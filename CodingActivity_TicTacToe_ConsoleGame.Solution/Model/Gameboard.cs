@@ -168,6 +168,27 @@ namespace CodingActivity_TicTacToe_ConsoleGame
             return true;
         }
 
+        public bool IsRoundComplete()
+        {
+            bool complete = false;
+
+            //if (currentState == GameboardState.CatsGame ||
+            //    currentState == GameboardState.PlayerOWin ||
+            //    currentState == GameboardState.PlayerOWin)
+            //{
+            //    complete = true;
+            //}
+
+            if (_currentRoundState == GameboardState.CatsGame ||
+                _currentRoundState == GameboardState.PlayerXWin ||
+                _currentRoundState == GameboardState.PlayerOWin)
+            {
+                complete = true;
+            }
+
+            return complete;
+        }
+
         /// <summary>
         /// Check for any three in a row.
         /// </summary>
@@ -246,7 +267,7 @@ namespace CodingActivity_TicTacToe_ConsoleGame
             }
 
             //
-            // Check levels in each column for player win
+            // Check vertical levels in each column for player win
             //
             for (int column = 0; column < 3; column++)
             {
@@ -276,6 +297,23 @@ namespace CodingActivity_TicTacToe_ConsoleGame
                 _positionState[1, 1, column] == playerPieceToCheck &&
                 _positionState[0, 2, column] == playerPieceToCheck)
                 )
+                {
+                    return true;
+                }
+            }
+            
+            //
+            // Check vertical diagonals in each row
+            //
+            for (int row = 0; row < 3; row++)
+            {
+                if ((_positionState[0, row, 0] == playerPieceToCheck &&
+                    _positionState[1, row, 1] == playerPieceToCheck &&
+                    _positionState[2, row, 2] == playerPieceToCheck)
+                    ||
+                    (_positionState[0, row, 2] == playerPieceToCheck &&
+                    _positionState[1, row, 1] == playerPieceToCheck &&
+                    _positionState[2, row, 0] == playerPieceToCheck))
                 {
                     return true;
                 }

@@ -326,9 +326,7 @@ namespace CodingActivity_TicTacToe_ConsoleGame
             switch (_gameboard.CurrentRoundState)
             {
                 case Gameboard.GameboardState.NewRound:
-                    //
-                    // The new game status should not be an necessary option here
-                    //
+                    DisplayMessageBox("You have not yet started a round.");
                     break;
                 case Gameboard.GameboardState.PlayerXTurn:
                     DisplayMessageBox("It is currently Player X's turn.");
@@ -417,6 +415,41 @@ namespace CodingActivity_TicTacToe_ConsoleGame
             }
             
 
+        }
+
+        /// <summary>
+        /// display splash screen
+        /// </summary>
+        /// <returns>player chooses to play</returns>
+        public bool DisplaySplashScreen()
+        {
+            bool playing = true;
+            ConsoleKeyInfo keyPressed;
+
+            Console.BackgroundColor = ConsoleUtil.SplashScreenBackgroundColor;
+            Console.ForegroundColor = ConsoleUtil.SplashScreenForegroundColor;
+            Console.Clear();
+            Console.CursorVisible = false;
+
+
+            Console.SetCursorPosition(0, 10);
+            string tabSpace = new String(' ', 35);
+            Console.WriteLine(tabSpace + @"TIC TAC TOE");
+            Console.WriteLine(tabSpace + @"
+                By Lianna Bowman, Thresa Schultz and Cati Kujawski");
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
+
+            Console.Write("Press any key to continue.");
+            keyPressed = Console.ReadKey();
+            if (keyPressed.Key == ConsoleKey.Escape)
+            {
+                playing = false;
+            }
+
+            return playing;
         }
 
         /// <summary>
