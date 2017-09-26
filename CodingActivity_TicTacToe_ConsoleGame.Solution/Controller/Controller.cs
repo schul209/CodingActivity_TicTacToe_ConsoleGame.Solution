@@ -103,22 +103,22 @@ namespace CodingActivity_TicTacToe_ConsoleGame
                     case MenuOption.None:
                         break;
                     case MenuOption.PlayNewRound:
-                        //_gameView.DisplayGameArea();
-                        _playingRound = true;
+                        _gameView.DisplayGameArea();
+                        //_playingRound = true;
                         break;
                     case MenuOption.ViewRules:
                         _gameView.DisplayWelcomeScreen();
-                        _playingRound = false;
+                        //_playingRound = false;
                         break;
                     case MenuOption.ViewCurrentGameResults:
-                        //_gameView.DisplayGameStatus();
-                        _gameView.DisplayCurrentGameStatus(_roundNumber, _playerXNumberOfWins, _playerONumberOfWins, _numberOfCatsGames);
-                        _playingRound = false;
+                        _gameView.DisplayGameStatus();
+                        //_gameView.DisplayCurrentGameStatus(_roundNumber, _playerXNumberOfWins, _playerONumberOfWins, _numberOfCatsGames);
+                        //_playingRound = false;
                         break; 
                     case MenuOption.Quit:
                         _gameView.DisplayExitPrompt();
-                        _playingRound = false;
-                        _playingGame = false;
+                        //_playingRound = false;
+                        //_playingGame = false;
                         break;
                     default:
                         break;
@@ -139,41 +139,43 @@ namespace CodingActivity_TicTacToe_ConsoleGame
                     _gameboard.UpdateGameboardState();
                 }
 
-                if (_gameboard.IsRoundComplete())
+                //
+                // Round Complete: Display the results
+                //
+                _gameView.DisplayCurrentGameStatus(_roundNumber, _playerXNumberOfWins, _playerONumberOfWins, _numberOfCatsGames);
+
+                //
+                // Confirm no major user errors
+                //
+                if (_gameView.CurrentViewState != ConsoleView.ViewState.PlayerUsedMaxAttempts ||
+                    _gameView.CurrentViewState != ConsoleView.ViewState.PlayerTimedOut)
                 {
                     //
-                    // Round Complete: Display the results
+                    // Prompt user to play another round
                     //
-                    _gameView.DisplayCurrentGameStatus(_roundNumber, _playerXNumberOfWins, _playerONumberOfWins, _numberOfCatsGames);
-
-                    //
-                    // Confirm no major user errors
-                    //
-                    if (_gameView.CurrentViewState != ConsoleView.ViewState.PlayerUsedMaxAttempts ||
-                        _gameView.CurrentViewState != ConsoleView.ViewState.PlayerTimedOut)
+                    if (_gameView.DisplayNewRoundPrompt())
                     {
-                        //
-                        // Prompt user to play another round
-                        //
-                        if (_gameView.DisplayNewRoundPrompt())
-                        {
-                            _gameboard.InitializeGameboard();
-                            _gameView.InitializeView();
-                            _playingRound = true;
-                        }
-                        else
-                        {
-                            _playingGame = false;
-                        }
+                        _gameboard.InitializeGameboard();
+                        _gameView.InitializeView();
+                        _playingRound = true;
                     }
-                    //
-                    // Major user error recorded, end game
-                    //
                     else
                     {
                         _playingGame = false;
                     }
                 }
+                //
+                // Major user error recorded, end game
+                //
+                else
+                {
+                    _playingGame = false;
+                }
+
+                //if (_gameboard.IsRoundComplete())
+                //{
+                    
+                //}
             }                
 
             _gameView.DisplayClosingScreen();
